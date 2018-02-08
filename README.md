@@ -2,6 +2,8 @@
 
 This is a test project to play with python 2.7, Django 1.11 and Channels v. 1
 
+There is only one HTTP view: a text console that connects to WS to send and receive JSON  streams with the Django Channels Javascript multiplexed client. 
+
 This setup uses:
 
 * **nginx**: web service, serve static files and redirect to other services.
