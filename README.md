@@ -10,7 +10,7 @@ This setup uses:
 * **redis**: A data storage
 * **workers**: Django channels
 
-##Overview
+## Overview
 
 The goal is to have three different paths at the web server:
  * /static -> files (web server)
@@ -18,7 +18,7 @@ The goal is to have three different paths at the web server:
  * / -> HTTP requests (WSGI)
 
 
-##Install
+## Install
 
 Get all the needed packages:
 
@@ -26,7 +26,7 @@ Get all the needed packages:
 	sudo apt-get install nginx python-pip python-dev uwsgi-plugin-python redis-server
 	pip install --upgrade pip
 
-###Python enviroment & Django
+### Python enviroment & Django
 
 Create a new python enviroment and install Django
 
@@ -40,7 +40,7 @@ Configure the database, STATIC_ROOT and ALLOWED_HOSTS in settings.py and
 	./manage.py createsuperuser admin
 	./manage.py collectstatic
 
-###Configure WSGI 
+### Configure WSGI 
 
 Install this system wide:
 	
@@ -49,7 +49,7 @@ Install this system wide:
 Create /etc/uwsgi/apps-available/platform.ini (symlink to apps-enabled)
 
 	[uwsgi]
-		project = otra
+		project = platform
 		base = /home/user
 		chdir = %(base)/%(project)
 		home = %(base)/Env/%(project)
@@ -63,7 +63,7 @@ Create /etc/uwsgi/apps-available/platform.ini (symlink to apps-enabled)
 		buffer-size = 32768
 
 
-##Configure ASGI 
+## Configure ASGI 
 
 
 This are the thing to get running:
@@ -79,7 +79,7 @@ Now manually we need 3 services running:
 	
 
 
-##Configure nginx
+## Configure nginx
 Example /etc/nginx/
 
 	server {
@@ -106,9 +106,9 @@ Example /etc/nginx/
 		}
 	}
 
-##Daemonize
+## Daemonize
 
-###Systemd (Ubuntu 16)
+### Systemd (Ubuntu 16)
 Create this unit files to daemonize all services, Replace "/home/user" and "plafform" as needed.
 
 /etc/systemd/system/uwsgi.service
@@ -171,7 +171,7 @@ Manage this services with systemctl stop/start/restart/status commands:
 	sudo systemctl start workers
 
 
-###Upstart (Ubuntu 14)
+### Upstart (Ubuntu 14)
 
 Create /etc/init/uwsgi.conf
 
