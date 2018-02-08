@@ -86,7 +86,7 @@ Example /etc/nginx/
 
 	server {
 		listen 80;
-		server_name www.platform.example;
+		server_name example.com;
 		location = /favicon.ico { access_log off; log_not_found off; }
 		location /static/ {
 			root /home/user/platform;
