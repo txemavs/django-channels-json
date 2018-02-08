@@ -13,9 +13,9 @@ This setup uses:
 ## Overview
 
 The goal is to have three different paths at the web server:
- * /static -> files (web server)
- * /channel -> Websocket connections (ASGI)
- * / -> HTTP requests (WSGI)
+ * ws://example.com/channel -> Websocket connections (ASGI: proxy to daphne)
+ * http://example.com/static -> files (web server)
+ * http://example.com -> HTTP requests (WSGI: uwsgi unix sock)
 
 
 ## Install
