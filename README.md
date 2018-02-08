@@ -91,7 +91,7 @@ Example /etc/nginx/
 		}
 		location / {
 			include uwsgi_params;
-			uwsgi_pass unix:/home/txema/otra/info.sock;
+			uwsgi_pass unix:/home/user/platform/info.sock;
 		}
 		location /channel/ {
 			proxy_pass http://127.0.0.1:8001;
