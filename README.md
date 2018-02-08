@@ -150,7 +150,7 @@ Create /etc/systemd/system/workers.service
 	[Service]
 		User = user
 		WorkingDirectory=/home/user/platform
-		ExecStart=/home/user/Env/otra/bin/python /home/user/platform/manage.py runworker
+		ExecStart=/home/user/Env/platform/bin/python /home/user/platform/manage.py runworker
 		Restart=always
 		KillSignal=SIGQUIT
 		Type=simple
