@@ -65,14 +65,14 @@ Create /etc/uwsgi/apps-available/platform.ini (symlink to apps-enabled)
 
 ## Configure ASGI 
 
+Install Django Channels and redis support:
 
-This are the thing to get running:
+	workon platform
+	pip install channels==1.1.8
+	pip install asgi_redis
 
-		workon platform
-		pip install channels==1.1.8
-		pip install asgi_redis
+Now we need this 3 services running, see later how to daemonize:
 
-Now manually we need 3 services running:
 	./manage.py runserver 0.0.0.0:8888
 	daphne -b 0.0.0.0 -p 8001 platform.asgi:channel_layer
 	./manage.py runworkers
@@ -117,7 +117,7 @@ Create this unit files to daemonize all services, Replace "/home/user" and "plaf
 		Description=uWSGI Emperor Service
 	[Service]
 		ExecStartPre=/bin/bash/ -c 'mkdir -p /run/uwsgi; chown user:www-data /run/wsgi'
-		ExecStart=/usr/local/bin/uwsgi --emperor /etc/uwsgi/apps-enabled --uid txema --gid www-data --logto /home/user/platform/uwsgi.log
+		ExecStart=/usr/local/bin/uwsgi --emperor /etc/uwsgi/apps-enabled --uid user --gid www-data --logto /home/user/platform/uwsgi.log
 		Restart=always
 		KillSignal=SIGQUIT
 		Type=notify
