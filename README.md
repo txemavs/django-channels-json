@@ -49,7 +49,7 @@ Install this system wide:
 Create /etc/uwsgi/apps-available/platform.ini (symlink to apps-enabled)
 
 	[uwsgi]
-		project = otra
+		project = platform
 		base = /home/user
 		chdir = %(base)/%(project)
 		home = %(base)/Env/%(project)
