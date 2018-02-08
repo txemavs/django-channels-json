@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static i18n %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#414141">
+        <title>WS Example</title>
+        <link href='{% static "favicon.ico" %}' rel="shortcut icon" />  
+        <link href='{% static "favicon.ico" %}' rel="apple-touch-icon" />  
+        <link href='{% static "css/font-awesome.min.css" %}' rel='stylesheet' type='text/css' />  
+        <link href='{% static "css/main.css" %}' rel='stylesheet' type='text/css' />  
+        <script src='{% static "js/jquery.min.js" %}' type="text/javascript"></script>
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="header-container">
+                <div>
+                    <div class="settings-top-bar closed">
+                        <div class="button icon settings-button mouse-effect" title="settings"><i class="fa fa-fw fa-gear"></i></div>
+                        <span class="logo">{% block title %}Channels{% endblock %}</span>
+                    </div>
+                    <div class="logo">
+                        <div class="hostname">localhost</div>
+                        <a href="">
+                            <span class="logo"><i class="fa fa-x-big fa-bars"></i></span>
+                        </a><a href="">
+                            <span class="logo"><i class="fa fa-x-big fa-chevron-left"></i></span>
+                        </a><a href="">
+                            <span class="logo"><i class="fa fa-x-big fa-chevron-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page">
+            {% block top %}{% endblock %}
+            {% block content %}{% endblock %}
+            {% block down %}{% endblock %}
+        </div>
+       
+        <div class="modal-glass"></div>
+        <div class="modal-container"></div>
+        <div class="popup-message-container"></div>
+        <!-- bottom -->
+        {% block bottom %}{% endblock %}
+        <!-- /bottom -->
+        <!-- exec -->
+        {% block exec %}{% endblock %}
+        <!-- /exec -->
+    </body>
+</html>
