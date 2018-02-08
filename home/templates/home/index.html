@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}Websockets example{% endblock %}
+
+{% block content %}
+<img class="background-logo" src="/static/img/background.png" onmousedown="return false;">
+<div class="page-container">
+</div>
+<div class="panel-wrap"><div class="panel">
+    <div class='panel-top'>
+    </div>
+    <div id = 'console_scroll' class='panel-middle'>
+        <pre id="output"></pre>
+    </div>
+    <div class='panel-bottom'>
+        <div id="cmd_line"><table><tr>
+            <td width="60px" ><input id="stream" /></td>
+            <td width="32px" align="center">&lt;&lt;</td>
+            <td width="99%"><input id="input" /></td>
+        </tr></table></div>
+    </div>
+</div></div>
+{% endblock %}
+
+{% block exec %}
+<script src='{% static "js/websocketbridge.js" %}'></script>
+<script>
+
+var log = function (data, color="#EEE", icon = "circle-o", stream="local") {
+    
+    if (!stream) {stream="ws";}
+
+    if (typeof data == "string") {
+        msg = '<span><i class="fa fa-fw fa-'+icon+'"></i></span> ' + stream + ': ' +data;
+    } else {
+        msg = '<span style="color:#'+color+'"><i class="fa fa-fw fa-'+icon+'"></i></span> '+stream+': ' + JSON.stringify(data);
+    }
+    $("#output").append('<span style="color:'+color+'">'+msg+'\n</span>')
+    $("#console_scroll").scrollTop($("#output").height());
+};
+
+var stream_handler = function(action, stream) {
+  log(action,"#0FF", "chevron-circle-right", stream)
+}
+
+
+$(document).ready(function() {
+
+    // 
+    var wsb = new channels.WebSocketBridge();
+    wsb.connect('/channel/?key=example');
+    wsb.socket.addEventListener('open', function() {
+        log("Websocket Connected");
+    })
+
+    wsb.listen(function(action, stream) {
+        log(action,"#0F0", "chevron-right", stream);
+    });
+
+    
+    wsb.demultiplex('main', stream_handler);
+    wsb.demultiplex('log', stream_handler);
+
+    // Events to send messages
+    var $input = $("#input");
+    var $stream = $("#stream");
+    $stream.val("main");
+
+    $stream.keyup( function (e) { if (e.keyCode == 13) { 
+        var stream = $stream.val();        
+        wsb.demultiplex(stream, stream_handler);
+        e.defaultPrevented;
+    }});
+
+    $input.keyup( function (e) { if (e.keyCode == 13) { 
+        var value = $input.val();
+        var stream = $stream.val();
+        var payload = { text: value }
+        log(JSON.stringify(payload),"#F80", "chevron-circle-left", stream)   ;     
+        wsb.send({stream:stream, payload:payload});
+        e.defaultPrevented;
+    }});
+
+});
+</script>
+{% endblock %}
